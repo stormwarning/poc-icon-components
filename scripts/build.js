@@ -13,13 +13,10 @@ const componentsFolder = path.join('.', 'src/components/icons');
 
 (async () => {
   const existingSprite = path.join('dist', 'icon-sprite.svg');
-  let spriteCheck;
-  try {
-    spriteCheck = await fs.open(existingSprite, 'r');
-    await spriteCheck.close();
+
+  // Remove existing sprite SVG.
+  if (existsSync(existingSprite)) {
     await fs.rm(existingSprite);
-  } catch {
-    // continue
   }
 
   const svgPaths = await globby('icons/*.svg', { absolute: true });
@@ -71,7 +68,7 @@ const componentsFolder = path.join('.', 'src/components/icons');
         });
       });
 
-      // Add to sprite sheet.
+      // Add icon to sprite sheet.
       sprites.add(svgName, optimizedSvg, 'utf8');
 
       /**
@@ -86,11 +83,8 @@ const componentsFolder = path.join('.', 'src/components/icons');
 
       const templateFileIfMissing = async (relativePath, contents) => {
         const filePath = path.join(componentFolder, relativePath);
-        let fileCheck;
-        try {
-          fileCheck = await fs.open(filePath, 'r');
-          await fileCheck.close();
-        } catch {
+
+        if (!existsSync(filePath)) {
           await fs.writeFile(filePath, `${contents}\n`, 'utf8');
         }
       };
@@ -113,14 +107,15 @@ const componentsFolder = path.join('.', 'src/components/icons');
     })
   );
 
+  // Remove some extra stuff from the sprite SVG.
   const spritesString = (
     await optimize(sprites.toString(), {
       plugins: ['removeDoctype', 'removeXMLProcInst'],
     })
   ).data;
-  if (!existsSync('dist')) {
-    await fs.mkdir('dist');
-  }
+
+  // Write new sprite SVG to disk.
+  if (!existsSync('dist')) await fs.mkdir('dist');
   await fs.writeFile(existingSprite, spritesString);
 
   // Create export index.
