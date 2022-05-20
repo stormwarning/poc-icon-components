@@ -1,0 +1,37 @@
+// Vitest Snapshot v1
+
+exports[`<IconMoon /> > should match snapshot 1`] = `
+<svg
+  aria-hidden="true"
+  height="32"
+  width="32"
+>
+  <use
+    xlink:href="/icon-sprite.svg#moon"
+  />
+</svg>
+`;
+
+exports[`<IconMoon2 /> > should match snapshot 1`] = `
+<svg
+  aria-hidden="true"
+  height="32"
+  width="32"
+>
+  <use
+    xlink:href="/icon-sprite.svg#moon2"
+  />
+</svg>
+`;
+
+exports[`<IconSun /> > should match snapshot 1`] = `
+<svg
+  aria-hidden="true"
+  height="32"
+  width="32"
+>
+  <use
+    xlink:href="/icon-sprite.svg#sun"
+  />
+</svg>
+`;
