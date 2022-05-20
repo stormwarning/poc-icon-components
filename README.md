@@ -4,6 +4,8 @@
 
 Any SVG files inside the root `icons` directory will be added to the icon sprite sheet. (This could be replaced with a Figma API response) The artwork should be as "flattened" as possible, on a 32px square artboard, and filled (or stroked) in black.
 
+SVGs should be use camelCase if the name is made up of more than one word. Names with a hyphen — `visibility-hidden.svg` for example — *will* be added to the sprite, but will not have a separate component generated. The "base" `visibility` icon component should be manually edited to toggle between the two icons based on props.
+
 Running the build script will generate a new icon sprite SVG, and a React component for any icons that don't already exist. The components can be edited in order to add custom options where necessary. The components wrap the base `Icon` component. Passing a `label` and `labelId` to the component will apply the appropriate accessibility attributes. There are four different `size` options: by default the icons are displayed at 32px, and can be scaled down to 24px, 20px, or 16px.
 
 ## General package setup
